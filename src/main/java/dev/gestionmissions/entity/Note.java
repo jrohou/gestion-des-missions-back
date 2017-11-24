@@ -3,7 +3,6 @@ package dev.gestionmissions.entity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,7 +16,6 @@ public class Note {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column
 	private LocalDate date;
 	private String nature;
 	private BigDecimal montant;

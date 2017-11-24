@@ -3,7 +3,6 @@ package dev.gestionmissions.entity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -19,7 +18,6 @@ public class Mission {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column
 	private LocalDate dateDebut;
 	private LocalDate dateFin;
 	@ManyToOne
@@ -29,6 +27,7 @@ public class Mission {
 	private String villeArrivee;
 	@Enumerated(EnumType.STRING)
 	private Statut statut;
+	@Enumerated(EnumType.STRING)
 	private Transport transport;
 	private BigDecimal montantPrime;
 	
