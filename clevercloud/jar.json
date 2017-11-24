@@ -1,0 +1,9 @@
+{
+	"build": {
+		"type": "maven",
+		"goal": "clean package -Pprod"
+	},
+	"deploy": {
+		"jarName": "target/gestion-des-missions-back.jar"
+	}
+}
