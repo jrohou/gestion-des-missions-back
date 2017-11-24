@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Note {
@@ -19,10 +19,10 @@ public class Note {
 	private LocalDate date;
 	private String nature;
 	private BigDecimal montant;
-	@OneToMany
+	@ManyToOne
 	@JoinColumn(name="MISS_ID")
 	private Mission mission;
-	
+
 	public Mission getMission() {
 		return mission;
 	}
