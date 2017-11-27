@@ -70,7 +70,8 @@ public class MissionController {
 	
 
 	 @DeleteMapping(value="/{id}")
-	 public void deleteCollegue(@PathVariable int id) {
+	 public List<Mission> deleteCollegue(@PathVariable int id) {
 		this.missionRepository.delete(this.missionRepository.findOne(id));
+		return this.missionRepository.findAll();
 	 }
 }
