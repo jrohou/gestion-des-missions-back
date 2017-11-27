@@ -1,5 +1,9 @@
 package dev.gestionmissions.repository;
 
-public interface NoteRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import dev.gestionmissions.entity.Note;
+
+public interface NoteRepository  extends JpaRepository<Note, Integer>{
 
 }

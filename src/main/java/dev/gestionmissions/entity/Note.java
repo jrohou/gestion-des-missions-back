@@ -23,16 +23,23 @@ public class Note {
 	@JoinColumn(name="MISS_ID")
 	private Mission mission;
 
+	public Note() {
+		super();
+	}
+
+	public Note(LocalDate date, String nature, BigDecimal montant, Mission mission) {
+		this.date = date;
+		this.nature = nature;
+		this.montant = montant;
+		this.mission = mission;
+	}
+
 	public Mission getMission() {
 		return mission;
 	}
 
 	public void setMission(Mission mission) {
 		this.mission = mission;
-	}
-
-	public Note() {
-		super();
 	}
 
 	public Integer getId() {
