@@ -20,7 +20,6 @@ public class Mission {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@NotNull
 	private LocalDate dateDebut;
 	private LocalDate dateFin;
 	@ManyToOne
