@@ -37,9 +37,9 @@ public class InitialisationService {
 		List<Nature> natureList = this.natureRepository.findAll();
 		
 		Stream.of(new Mission(LocalDate.of(2017, 1, 5), LocalDate.of(2017, 2, 15), natureList.get(0), "Toulouse", "Toulon", Statut.INITIALE, Transport.COVOITURAGE, new BigDecimal(15)),
-				new Mission(LocalDate.of(2012, 1, 5), LocalDate.of(2013, 2, 15), natureList.get(1), "Nantes", "Paris", Statut.INITIALE, Transport.TRAIN, new BigDecimal(15)),
-				new Mission(LocalDate.of(2016, 11, 5), LocalDate.of(2016, 12, 15), natureList.get(2), "Strasbourg", "Paris", Statut.INITIALE, Transport.VOITURE, new BigDecimal(15)),
-				new Mission(LocalDate.of(2017, 1, 5), LocalDate.of(2017, 2, 15), natureList.get(0), "Toulouse", "Limoges", Statut.INITIALE, Transport.AVION, new BigDecimal(15)))
+				new Mission(LocalDate.of(2012, 1, 5), LocalDate.of(2013, 2, 15), natureList.get(1), "Nantes", "Paris", Statut.VALIDEE, Transport.TRAIN, new BigDecimal(15)),
+				new Mission(LocalDate.of(2016, 11, 5), LocalDate.of(2016, 12, 15), natureList.get(2), "Strasbourg", "Paris", Statut.REJETEE, Transport.VOITURE, new BigDecimal(15)),
+				new Mission(LocalDate.of(2017, 1, 5), LocalDate.of(2017, 2, 15), natureList.get(0), "Toulouse", "Limoges", Statut.EN_ATTENTE_VALIDATION, Transport.AVION, new BigDecimal(15)))
 		.forEach(mission -> {this.missionRepository.save(mission);});
 	}
 }
