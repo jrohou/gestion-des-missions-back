@@ -3,6 +3,7 @@ package dev.gestionmissions.entity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -22,7 +23,7 @@ public class Mission {
 	private LocalDate dateDebut;
 	private LocalDate dateFin;
 	@ManyToOne
-	@JoinColumn(name="NAT_ID")
+	@JoinColumn(name="nature")
 	private Nature nature;
 	private String villeDepart;
 	private String villeArrivee;
@@ -35,6 +36,21 @@ public class Mission {
 	public Mission() {
 		super();
 	}
+
+	public Mission(LocalDate dateDebut, LocalDate dateFin, Nature nature, String villeDepart, String villeArrivee,
+			Statut statut, Transport transport, BigDecimal montantPrime) {
+		super();
+		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
+		this.nature = nature;
+		this.villeDepart = villeDepart;
+		this.villeArrivee = villeArrivee;
+		this.statut = statut;
+		this.transport = transport;
+		this.montantPrime = montantPrime;
+	}
+
+
 
 	public Integer getId() {
 		return id;

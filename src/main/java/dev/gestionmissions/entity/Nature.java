@@ -25,6 +25,19 @@ public class Nature {
 		super();
 	}
 
+	public Nature(String nom, LocalDate dateDebutValidite, LocalDate dateFinValidite, boolean facturee,
+			boolean versementPrime, BigDecimal tauxJournalierMoyen) {
+		super();
+		this.nom = nom;
+		this.dateDebutValidite = dateDebutValidite;
+		this.dateFinValidite = dateFinValidite;
+		this.facturee = facturee;
+		this.versementPrime = versementPrime;
+		this.tauxJournalierMoyen = tauxJournalierMoyen;
+	}
+
+
+
 	public Integer getId() {
 		return id;
 	}
