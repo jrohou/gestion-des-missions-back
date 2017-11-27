@@ -37,6 +37,21 @@ public class Mission {
 		super();
 	}
 
+	public Mission(LocalDate dateDebut, LocalDate dateFin, Nature nature, String villeDepart, String villeArrivee,
+			Statut statut, Transport transport, BigDecimal montantPrime) {
+		super();
+		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
+		this.nature = nature;
+		this.villeDepart = villeDepart;
+		this.villeArrivee = villeArrivee;
+		this.statut = statut;
+		this.transport = transport;
+		this.montantPrime = montantPrime;
+	}
+
+
+
 	public Integer getId() {
 		return id;
 	}
