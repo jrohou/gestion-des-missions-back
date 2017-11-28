@@ -29,7 +29,7 @@ public class Mission {
 	private String villeArrivee;
 	@Enumerated(EnumType.STRING)
 	private Statut statut;
-	@Enumerated(EnumType.STRING)
+	@ManyToOne
 	private Transport transport;
 	private BigDecimal montantPrime;
 	
