@@ -34,7 +34,7 @@ public class MissionController {
 	@PostConstruct
 	public void initMissions() {
 				
-		missionRepository.save(new Mission(LocalDate.of(2017, 02, 02), LocalDate.of(2017, 05, 02), natureRepository.findOne(0), "toulouse", "nantes", Statut.INITIALE, Transport.COVOITURAGE, new BigDecimal(15)));
+		missionRepository.save(new Mission(LocalDate.of(2017, 02, 02), LocalDate.of(2017, 05, 02), natureRepository.findOne(1), "toulouse", "nantes", Statut.INITIALE, Transport.COVOITURAGE, new BigDecimal(15)));
 	}
 	
 	@GetMapping
