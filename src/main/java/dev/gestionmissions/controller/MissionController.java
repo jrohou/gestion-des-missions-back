@@ -2,6 +2,7 @@ package dev.gestionmissions.controller;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,8 +44,13 @@ public class MissionController {
 		return missionRepository.findOne(id);
 	}
 	
+	@PutMapping("/{id}")
+	public Mission changerMission(@PathVariable Integer id, @RequestBody Mission mission) {
+		return missionRepository.save(mission);
+	}
+	
 
-	@PostMapping
+	@PostMapping()
 	public String ajouterMission (@RequestBody Mission mission ){
 		return this.missionService.sauvegarderMission(mission);
 	}
@@ -54,4 +61,5 @@ public class MissionController {
 		this.missionRepository.delete(this.missionRepository.findOne(id));
 		return this.missionRepository.findAll();
 	 }
+
 }
