@@ -14,8 +14,7 @@ public class InitListener {
 	private InitialisationService init;
 	
 	@EventListener({ ContextRefreshedEvent.class })
-	void contextRefreshedEvent() {
-		
+	void contextRefreshedEvent() {	
 		init.init();
 	}
 }

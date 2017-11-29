@@ -17,7 +17,9 @@ public class Note {
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private LocalDate date;
-	private String nature;
+	@ManyToOne
+	@JoinColumn(name="NAT_ID")
+	private NatureNote nature;
 	private BigDecimal montant;
 	@ManyToOne
 	@JoinColumn(name="MISS_ID")
@@ -27,7 +29,7 @@ public class Note {
 		super();
 	}
 
-	public Note(LocalDate date, String nature, BigDecimal montant, Mission mission) {
+	public Note(LocalDate date, NatureNote nature, BigDecimal montant, Mission mission) {
 		this.date = date;
 		this.nature = nature;
 		this.montant = montant;
@@ -58,11 +60,11 @@ public class Note {
 		this.date = date;
 	}
 
-	public String getNature() {
+	public NatureNote getNature() {
 		return nature;
 	}
 
-	public void setNature(String nature) {
+	public void setNature(NatureNote nature) {
 		this.nature = nature;
 	}
 

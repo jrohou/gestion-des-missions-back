@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.gestionmissions.entity.Mission;
 import dev.gestionmissions.repository.MissionRepository;
-import dev.gestionmissions.repository.NatureRepository;
 import dev.gestionmissions.service.MissionService;
 
 
@@ -29,9 +29,6 @@ public class MissionController {
 	@Autowired
 	private MissionService missionService;
 
-	@Autowired private NatureRepository natureRepository;
-  
-	
 	@GetMapping
 	public List<Mission> listerMissions() {
 		return missionRepository.findAll();
@@ -42,16 +39,22 @@ public class MissionController {
 		return missionRepository.findOne(id);
 	}
 	
+	@PutMapping("/{id}")
+	public Mission changerMission(@PathVariable Integer id, @RequestBody Mission mission) {
+		return missionRepository.save(mission);
+	}
+	
 
-	@PostMapping
+	@PostMapping()
 	public String ajouterMission (@RequestBody Mission mission ){
 		return this.missionService.sauvegarderMission(mission);
 	}
 	
 
 	 @DeleteMapping(value="/{id}")
-	 public List<Mission> deleteCollegue(@PathVariable int id) {
+	 public List<Mission> deleteMission(@PathVariable int id) {
 		this.missionRepository.delete(this.missionRepository.findOne(id));
 		return this.missionRepository.findAll();
 	 }
+
 }
