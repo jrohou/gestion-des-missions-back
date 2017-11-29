@@ -2,7 +2,6 @@ package dev.gestionmissions.controller;
 
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.gestionmissions.entity.Mission;
 import dev.gestionmissions.repository.MissionRepository;
-import dev.gestionmissions.repository.NatureRepository;
 import dev.gestionmissions.service.MissionService;
 
 
@@ -31,9 +29,6 @@ public class MissionController {
 	@Autowired
 	private MissionService missionService;
 
-	@Autowired private NatureRepository natureRepository;
-  
-	
 	@GetMapping
 	public List<Mission> listerMissions() {
 		return missionRepository.findAll();
@@ -57,7 +52,7 @@ public class MissionController {
 	
 
 	 @DeleteMapping(value="/{id}")
-	 public List<Mission> deleteCollegue(@PathVariable int id) {
+	 public List<Mission> deleteMission(@PathVariable int id) {
 		this.missionRepository.delete(this.missionRepository.findOne(id));
 		return this.missionRepository.findAll();
 	 }
