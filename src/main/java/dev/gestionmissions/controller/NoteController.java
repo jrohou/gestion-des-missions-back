@@ -34,7 +34,7 @@ public class NoteController {
 
 	@GetMapping("/{id}")
 	public List<Note> trouverNotesDeMission(@PathVariable Integer id) {
-		return noteRepository.trouverNotesDeMission(missionRepository.findOne(id));
+		return noteRepository.findByMissionId(id);
 	}
 	
 	@PutMapping("/{id}")
