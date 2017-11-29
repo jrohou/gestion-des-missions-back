@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.gestionmissions.entity.Note;
-import dev.gestionmissions.repository.MissionRepository;
 import dev.gestionmissions.repository.NoteRepository;
 import dev.gestionmissions.service.NoteService;
 
@@ -23,7 +22,6 @@ import dev.gestionmissions.service.NoteService;
 @RequestMapping("/notes")
 public class NoteController {
 
-	@Autowired private MissionRepository missionRepository;
 	@Autowired private NoteRepository noteRepository;
 	@Autowired private NoteService noteService;
 	
