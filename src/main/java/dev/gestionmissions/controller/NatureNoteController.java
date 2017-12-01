@@ -13,7 +13,7 @@ import dev.gestionmissions.repository.NatureNoteRepository;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/notes")
+@RequestMapping("/nature-notes")
 public class NatureNoteController {
 	@Autowired private NatureNoteRepository natureNoteRepository;
 	

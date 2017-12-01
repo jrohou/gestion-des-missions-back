@@ -1,5 +1,7 @@
 package dev.gestionmissions.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,19 +17,19 @@ public class NoteService {
 	@Autowired
 	private DateUtil dateUtil;
 	
-	public String sauvegarderNote(Note note){
+	public List<Note> sauvegarderNote(Note note){
 		note.setDate(this.dateUtil.convertJSDateToJavaLocalDate(note.getDate()));
 		if (note.getDate()==null){
-			return "Entrez des dates";
+			return null;
 		}
 		if(note.getDate().isBefore(note.getMission().getDateDebut())){
-			return "La date de la note ne peut pas être avant le début de la mission";
+			return null;
 		}
 		if(note.getDate().isAfter(note.getMission().getDateFin())){
-			return "La date de fin ne peut pas être après la fin de la mission";
+			return null;
 		}
 		this.noteRepository.save(note);
-		return "success";
+		return this.noteRepository.findByMissionId(note.getMission().getId());
 	}
 
 }

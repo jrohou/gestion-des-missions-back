@@ -22,9 +22,11 @@ import dev.gestionmissions.service.NoteService;
 @RequestMapping("/notes")
 public class NoteController {
 
-	@Autowired private NoteRepository noteRepository;
-	@Autowired private NoteService noteService;
-	
+	@Autowired
+	private NoteRepository noteRepository;
+	@Autowired
+	private NoteService noteService;
+
 	@GetMapping
 	public List<Note> listerNotes() {
 		return noteRepository.findAll();
@@ -34,27 +36,26 @@ public class NoteController {
 	public Note trouverNote(@PathVariable Integer id) {
 		return noteRepository.findOne(id);
 	}
-	
+
 	@GetMapping("/mission/{id}")
 	public List<Note> trouverNotesDeMission(@PathVariable Integer id) {
 		return noteRepository.findByMissionId(id);
 	}
-	
+
 	@PutMapping("/{id}")
 	public Note changerNote(@PathVariable Integer id, @RequestBody Note note) {
 		return noteRepository.save(note);
 	}
-	
 
 	@PostMapping()
-	public String ajouterNote(@RequestBody Note note ){
+	public List<Note> ajouterNote(@RequestBody Note note) {
 		return this.noteService.sauvegarderNote(note);
 	}
-	
 
-	 @DeleteMapping(value="/{id}")
-	 public List<Note> deleteNote(@PathVariable int id) {
+	@DeleteMapping(value = "/{id}")
+	public List<Note> deleteNote(@PathVariable int id) {
+		int idMission = this.noteRepository.findOne(id).getMission().getId();
 		this.noteRepository.delete(this.noteRepository.findOne(id));
-		return this.noteRepository.findAll();
-	 }
+		return noteRepository.findByMissionId(idMission);
+	}
 }
