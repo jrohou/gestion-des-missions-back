@@ -29,9 +29,9 @@ public class InitialisationService {
 	private NoteRepository noteRepository;
 
 	public void init(){
-		Stream.of(new Nature("Conseil", LocalDate.of(1990, 5, 25), LocalDate.of(2020, 5, 25), true, true, new BigDecimal(10)),
-				 new Nature("Expertise Technique", LocalDate.of(2010, 5, 25), LocalDate.of(2035, 5, 25), true, true, new BigDecimal(25)),
-				 new Nature("Formation", LocalDate.of(2016, 5, 25), LocalDate.of(2050, 5, 25), false, false, new BigDecimal(0)))
+		Stream.of(new Nature("Conseil", LocalDate.of(1990, 5, 25), LocalDate.of(2020, 5, 25), true, true, new BigDecimal(10), new BigDecimal(3.5)),
+				 new Nature("Expertise Technique", LocalDate.of(2010, 5, 25), LocalDate.of(2035, 5, 25), true, true, new BigDecimal(25), new BigDecimal(4)),
+				 new Nature("Formation", LocalDate.of(2016, 5, 25), LocalDate.of(2050, 5, 25), false, false, new BigDecimal(0), new BigDecimal(0)))
 				.forEach(nature->{this.natureRepository.save(nature);});
 		
 		List<Nature> natureList = this.natureRepository.findAll();
