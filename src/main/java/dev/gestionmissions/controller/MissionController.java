@@ -1,6 +1,5 @@
 package dev.gestionmissions.controller;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.gestionmissions.entity.Mission;
+import dev.gestionmissions.exception.ValidationMissionException;
 import dev.gestionmissions.repository.MissionRepository;
 import dev.gestionmissions.service.MissionService;
-
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -38,23 +37,22 @@ public class MissionController {
 	public Mission trouverMission(@PathVariable Integer id) {
 		return missionRepository.findOne(id);
 	}
-	
+
 	@PutMapping("/{id}")
-	public Mission changerMission(@PathVariable Integer id, @RequestBody Mission mission) {
-		return missionRepository.save(mission);
+	public Mission changerMission(@PathVariable Integer id, @RequestBody Mission mission)
+			throws ValidationMissionException {
+		return this.missionService.modifierMission(mission);
 	}
-	
 
 	@PostMapping()
-	public String ajouterMission (@RequestBody Mission mission ){
+	public Mission ajouterMission(@RequestBody Mission mission) throws ValidationMissionException {
 		return this.missionService.sauvegarderMission(mission);
 	}
-	
 
-	 @DeleteMapping(value="/{id}")
-	 public List<Mission> deleteMission(@PathVariable int id) {
+	@DeleteMapping(value = "/{id}")
+	public List<Mission> deleteMission(@PathVariable int id) {
 		this.missionRepository.delete(this.missionRepository.findOne(id));
 		return this.missionRepository.findAll();
-	 }
+	}
 
 }
