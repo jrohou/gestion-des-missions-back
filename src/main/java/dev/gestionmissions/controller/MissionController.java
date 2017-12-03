@@ -2,6 +2,8 @@ package dev.gestionmissions.controller;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import dev.gestionmissions.entity.Mission;
 import dev.gestionmissions.exception.ValidationMissionException;
 import dev.gestionmissions.repository.MissionRepository;
+import dev.gestionmissions.repository.NoteRepository;
 import dev.gestionmissions.service.MissionService;
 
 @RestController
@@ -24,6 +27,8 @@ import dev.gestionmissions.service.MissionService;
 public class MissionController {
 	@Autowired
 	private MissionRepository missionRepository;
+	@Autowired
+	private NoteRepository noteRepository;
 
 	@Autowired
 	private MissionService missionService;
@@ -50,7 +55,9 @@ public class MissionController {
 	}
 
 	@DeleteMapping(value = "/{id}")
+	@Transactional()
 	public List<Mission> deleteMission(@PathVariable int id) {
+		this.noteRepository.deleteByMissionId(id);
 		this.missionRepository.delete(this.missionRepository.findOne(id));
 		return this.missionRepository.findAll();
 	}
