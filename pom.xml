@@ -66,11 +66,15 @@
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-jsr310</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
 
 	</dependencies>
 
 	<build>
-	<finalName>gestion-des-missions-back</finalName>
+		<finalName>gestion-des-missions-back</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
