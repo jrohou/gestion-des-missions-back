@@ -1,8 +1,9 @@
 package dev.gestionmissions.controller;
 
-
 import java.util.List;
 import java.util.Map;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,10 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.gestionmissions.entity.Mission;
 import dev.gestionmissions.entity.Statut;
+import dev.gestionmissions.exception.ValidationMissionException;
 import dev.gestionmissions.repository.MissionRepository;
-import dev.gestionmissions.repository.NatureRepository;
+import dev.gestionmissions.repository.NoteRepository;
 import dev.gestionmissions.service.MissionService;
-
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -28,13 +29,12 @@ import dev.gestionmissions.service.MissionService;
 public class MissionController {
 	@Autowired
 	private MissionRepository missionRepository;
+	@Autowired
+	private NoteRepository noteRepository;
 
 	@Autowired
 	private MissionService missionService;
 
-	@Autowired private NatureRepository natureRepository;
-  
-	
 	@GetMapping
 	public List<Mission> listerMissions() {
 		return missionRepository.findAll();
@@ -44,15 +44,20 @@ public class MissionController {
 	public Mission trouverMission(@PathVariable Integer id) {
 		return missionRepository.findOne(id);
 	}
-	
 
-	@PostMapping
-	public String ajouterMission (@RequestBody Mission mission ){
+	@PutMapping("/{id}")
+	public Mission changerMission(@PathVariable Integer id, @RequestBody Mission mission)
+			throws ValidationMissionException {
+		return this.missionService.modifierMission(mission);
+	}
+
+	@PostMapping()
+	public Mission ajouterMission(@RequestBody Mission mission) throws ValidationMissionException {
 		return this.missionService.sauvegarderMission(mission);
 	}
 	
 	@SuppressWarnings("static-access")
-	@PutMapping(value="/{id}")
+	@PutMapping(value="/statut/{id}")
 	 public Mission changerStatutMission(@PathVariable int id, @RequestBody Map<String, String> statut) {
 		
 		Mission mission = this.missionRepository.findOne(id);
@@ -67,9 +72,12 @@ public class MissionController {
 		
 	 }
 	
-	 @DeleteMapping(value="/{id}")
-	 public List<Mission> deleteCollegue(@PathVariable int id) {
+	@DeleteMapping(value = "/{id}")
+	@Transactional()
+	public List<Mission> deleteMission(@PathVariable int id) {
+		this.noteRepository.deleteByMissionId(id);
 		this.missionRepository.delete(this.missionRepository.findOne(id));
 		return this.missionRepository.findAll();
-	 }
+	}
+
 }

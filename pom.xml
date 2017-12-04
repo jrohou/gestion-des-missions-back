@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>dev</groupId>
-	<artifactId>gestion-missions</artifactId>
+	<artifactId>gestion-des-missions-back</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>gestion-missions</name>
+	<name>gestion-des-missions-back</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
@@ -66,10 +66,15 @@
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-jsr310</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
 
 	</dependencies>
 
 	<build>
+		<finalName>gestion-des-missions-back</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

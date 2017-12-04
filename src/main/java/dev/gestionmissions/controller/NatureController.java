@@ -49,10 +49,7 @@ public class NatureController {
 	
 	@PutMapping(value="/{id}")
 	 public Nature majNatureMission(@RequestBody Nature nature) {
-		
-		Nature nat = this.natureRepository.findById(nature.getId());
-		return this.natureRepository.save(nat);
-
+		return this.natureRepository.save(nature);
 	 }
 	
 	@DeleteMapping(value="/{id}")

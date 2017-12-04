@@ -9,6 +9,7 @@ import dev.gestionmissions.entity.Nature;
 import dev.gestionmissions.exception.ControleException;
 import dev.gestionmissions.exception.DoublonNatureException;
 import dev.gestionmissions.exception.PourcentagePrimeException;
+import dev.gestionmissions.exception.TjmException;
 import dev.gestionmissions.repository.NatureRepository;
 
 
@@ -26,9 +27,12 @@ public class NatureService {
 		else if (isDoublon(nature)){
 			throw new DoublonNatureException();
 		}
-		else if(nature.getPourcentagePrime()!=null && nature.getPourcentagePrime().floatValue() > 10)
+		else if((nature.getPourcentagePrime() != null && nature.getPourcentagePrime().floatValue() > 10))
 		{
 			throw new PourcentagePrimeException();
+		}
+		else if( (nature.getTauxJournalierMoyen() == null && nature.isFacturee() == true) ) {
+			throw new TjmException();
 		}
 		
 		nature.setDateDebutValidite(LocalDate.now());
