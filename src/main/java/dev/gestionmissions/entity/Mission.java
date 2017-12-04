@@ -3,7 +3,6 @@ package dev.gestionmissions.entity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
 
 @Entity
 public class Mission {
@@ -32,13 +30,14 @@ public class Mission {
 	@ManyToOne
 	private Transport transport;
 	private BigDecimal montantPrime;
+	private String matricule;
 	
 	public Mission() {
 		super();
 	}
 
 	public Mission(LocalDate dateDebut, LocalDate dateFin, Nature nature, String villeDepart, String villeArrivee,
-			Statut statut, Transport transport, BigDecimal montantPrime) {
+			Statut statut, Transport transport, BigDecimal montantPrime, String matricule) {
 		super();
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
@@ -48,6 +47,7 @@ public class Mission {
 		this.statut = statut;
 		this.transport = transport;
 		this.montantPrime = montantPrime;
+		this.matricule = matricule;
 	}
 
 
@@ -122,6 +122,20 @@ public class Mission {
 
 	public void setMontantPrime(BigDecimal montantPrime) {
 		this.montantPrime = montantPrime;
+	}
+
+	/**
+	 * @return the matricule
+	 */
+	public String getMatricule() {
+		return matricule;
+	}
+
+	/**
+	 * @param matricule the matricule to set
+	 */
+	public void setMatricule(String matricule) {
+		this.matricule = matricule;
 	}
 	
 	
