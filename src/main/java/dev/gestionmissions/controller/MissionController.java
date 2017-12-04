@@ -1,5 +1,6 @@
 package dev.gestionmissions.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,26 +19,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.gestionmissions.entity.Mission;
 import dev.gestionmissions.entity.Statut;
+import dev.gestionmissions.entity.User;
 import dev.gestionmissions.exception.ValidationMissionException;
 import dev.gestionmissions.repository.MissionRepository;
 import dev.gestionmissions.repository.NoteRepository;
 import dev.gestionmissions.service.MissionService;
+import dev.gestionmissions.service.UserService;
 
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/missions")
 public class MissionController {
-	@Autowired
-	private MissionRepository missionRepository;
-	@Autowired
-	private NoteRepository noteRepository;
-
-	@Autowired
-	private MissionService missionService;
+	@Autowired private MissionRepository missionRepository;
+	@Autowired private NoteRepository noteRepository;
+	@Autowired private UserService userController;
+	@Autowired private MissionService missionService;
 
 	@GetMapping
 	public List<Mission> listerMissions() {
 		return missionRepository.findAll();
+	}
+	
+	@GetMapping("/matricule/{matricule}")
+	public List<Mission> listerMissionsByUser(@PathVariable String matricule) {
+		return missionRepository.findMissionByMatricule(matricule);
 	}
 
 	@GetMapping("/{id}")
@@ -80,4 +85,16 @@ public class MissionController {
 		return this.missionRepository.findAll();
 	}
 
+	@GetMapping("/subalternes/{matricule}")
+	public List<Mission> getMissionBySubalterne(@PathVariable String matricule){
+		User user = userController.users.get(matricule);
+		List<Mission> subalternesMission = new ArrayList<>();
+		for(String subalterne:user.getSubalternes()) {
+			for(Mission mission:missionRepository.findMissionByMatricule(subalterne)) {
+				subalternesMission.add(mission);
+			}
+		}
+		
+		return subalternesMission;
+	}
 }
