@@ -20,6 +20,7 @@ public class TraitementMissions {
 
 	@Autowired
 	private MissionService missionService;
+	
 
 	@Scheduled(cron = "0 0 * * *") // tous les jours à minuit
 	public void scheduledTask() {
