@@ -1,5 +1,6 @@
 package dev.gestionmissions.service;
 
+import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 
@@ -7,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dev.gestionmissions.entity.Mission;
-import dev.gestionmissions.entity.Transport;
 import dev.gestionmissions.exception.ValidationMissionException;
 import dev.gestionmissions.repository.MissionRepository;
 import dev.gestionmissions.repository.TransportRepository;
@@ -52,7 +52,7 @@ public class MissionService {
 		}
 		return this.missionRepository.save(mission);
 	}
-	
+
 	public Mission modifierMission(Mission mission) throws ValidationMissionException {
 		mission.setDateDebut(this.dateUtil.convertJSDateToJavaLocalDate(mission.getDateDebut()));
 		mission.setDateFin(this.dateUtil.convertJSDateToJavaLocalDate(mission.getDateFin()));
@@ -71,5 +71,17 @@ public class MissionService {
 			throw new ValidationMissionException("La mission ne peut pas se terminer le weekend");
 		}
 		return this.missionRepository.save(mission);
+	}
+
+	public BigDecimal calculerNbJoursTravailles(Mission mission) {
+		LocalDate date = mission.getDateDebut();
+		BigDecimal nbJoursTravailles = new BigDecimal(0);
+		while (date.isBefore(mission.getDateFin()) || date.isEqual(mission.getDateFin())) {
+			if (!date.getDayOfWeek().equals(DayOfWeek.SUNDAY) && !date.getDayOfWeek().equals(DayOfWeek.SATURDAY)) {
+				nbJoursTravailles.add(new BigDecimal(1));
+			}
+			date = date.plusDays(1);
+		}
+		return nbJoursTravailles;
 	}
 }
