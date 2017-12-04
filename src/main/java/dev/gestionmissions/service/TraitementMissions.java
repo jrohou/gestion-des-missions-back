@@ -35,6 +35,16 @@ public class TraitementMissions {
 
 		missions.stream().filter(mission -> mission.getStatut().equals(Statut.INITIALE)).forEach(mission -> {
 			mission.setStatut(Statut.EN_ATTENTE_VALIDATION);
+			SimpleMailMessage msg = new SimpleMailMessage(this.templateMessage);
+//			msg.setTo(order.getCustomer().getEmailAddress());
+//	        msg.setText("Une nouvelle mission est en attente de validation");
+//	        try{
+//	            this.mailSender.send(msg);
+//	        }
+//	        catch (MailException ex) {
+//	            // simply log it and go on...
+//	            System.err.println(ex.getMessage());
+//	        }
 			this.missionRepository.save(mission);
 		});
 
