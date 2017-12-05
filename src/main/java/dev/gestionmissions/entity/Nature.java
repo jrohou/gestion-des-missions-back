@@ -20,13 +20,14 @@ public class Nature {
 	private boolean facturee;
 	private boolean versementPrime;
 	private BigDecimal tauxJournalierMoyen;
+	private BigDecimal pourcentagePrime;
 	
 	public Nature() {
 		super();
 	}
 
 	public Nature(String nom, LocalDate dateDebutValidite, LocalDate dateFinValidite, boolean facturee,
-			boolean versementPrime, BigDecimal tauxJournalierMoyen) {
+			boolean versementPrime, BigDecimal tauxJournalierMoyen, BigDecimal pourcentagePrime) {
 		super();
 		this.nom = nom;
 		this.dateDebutValidite = dateDebutValidite;
@@ -34,6 +35,7 @@ public class Nature {
 		this.facturee = facturee;
 		this.versementPrime = versementPrime;
 		this.tauxJournalierMoyen = tauxJournalierMoyen;
+		this.pourcentagePrime = pourcentagePrime;
 	}
 
 
@@ -92,6 +94,14 @@ public class Nature {
 
 	public void setTauxJournalierMoyen(BigDecimal tauxJournalierMoyen) {
 		this.tauxJournalierMoyen = tauxJournalierMoyen;
+	}
+	
+	public BigDecimal getPourcentagePrime() {
+		return pourcentagePrime;
+	}
+
+	public void setPourcentagePrime(BigDecimal pourcentagePrime) {
+		this.pourcentagePrime = pourcentagePrime;
 	}
 	
 	

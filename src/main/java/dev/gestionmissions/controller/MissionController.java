@@ -2,6 +2,7 @@ package dev.gestionmissions.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.gestionmissions.entity.Mission;
+import dev.gestionmissions.entity.Statut;
 import dev.gestionmissions.entity.User;
 import dev.gestionmissions.exception.ValidationMissionException;
 import dev.gestionmissions.repository.MissionRepository;
@@ -58,7 +60,23 @@ public class MissionController {
 	public Mission ajouterMission(@RequestBody Mission mission) throws ValidationMissionException {
 		return this.missionService.sauvegarderMission(mission);
 	}
-
+	
+	@SuppressWarnings("static-access")
+	@PutMapping(value="/statut/{id}")
+	 public Mission changerStatutMission(@PathVariable int id, @RequestBody Map<String, String> statut) {
+		
+		Mission mission = this.missionRepository.findOne(id);
+		if( statut.get("statut").equals("accepte")) {
+			mission.setStatut(Statut.VALIDEE);
+		}
+		else if (statut.get("statut").equals("rejetee")) {
+			mission.setStatut(Statut.REJETEE);
+		}
+		
+		return missionRepository.save(mission);
+		
+	 }
+	
 	@DeleteMapping(value = "/{id}")
 	@Transactional()
 	public List<Mission> deleteMission(@PathVariable int id) {
