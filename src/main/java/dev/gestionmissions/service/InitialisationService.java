@@ -36,6 +36,7 @@ public class InitialisationService {
 	@Autowired private NatureNoteRepository natureNoteRepository;
 	@Autowired private NoteRepository noteRepository;
 	@Autowired private UserService userController;
+	@Autowired private TraitementMissions traitement;
 	
 	@Autowired
 	private TransportRepository transportRepository;
@@ -90,6 +91,8 @@ public class InitialisationService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		traitement.scheduledTask();
 		
 	}
 }
