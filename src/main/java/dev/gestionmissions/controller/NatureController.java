@@ -1,6 +1,9 @@
 package dev.gestionmissions.controller;
 
 import java.util.List;
+
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.gestionmissions.entity.Mission;
 import dev.gestionmissions.entity.Nature;
 import dev.gestionmissions.repository.NatureRepository;
 import dev.gestionmissions.service.NatureService;
@@ -46,8 +50,9 @@ public class NatureController {
 	 }
 	
 	@DeleteMapping(value="/{id}")
-	 public List<Nature> deleteCollegue(@PathVariable int id) {
+	@Transactional
+	public List<Nature> deleteNature(@PathVariable int id) {
 		this.natureRepository.delete(this.natureRepository.findOne(id));
 		return this.natureRepository.findAll();
-	 }
+	}
 }

@@ -1,5 +1,6 @@
 package dev.gestionmissions.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +56,14 @@ public class MissionController {
 	@GetMapping("/{id}")
 	public Mission trouverMission(@PathVariable Integer id) {
 		return missionRepository.findOne(id);
+	}
+	
+	@GetMapping("/nature/{id}")
+	public boolean trouverNatureMission(@PathVariable Integer id) {
+		return missionRepository.findAll().stream()
+				.filter(mission -> mission.getDateFin().isBefore(LocalDate.now()) && mission.getNature().getId() == id)
+				.findAny()
+				.isPresent();
 	}
 
 	@PutMapping("/{id}")
