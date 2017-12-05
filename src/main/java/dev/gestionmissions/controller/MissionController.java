@@ -1,8 +1,13 @@
 package dev.gestionmissions.controller;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+<<<<<<< HEAD
+import java.util.Optional;
+=======
 import java.util.Map;
+>>>>>>> master
 
 import javax.transaction.Transactional;
 
@@ -18,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.gestionmissions.entity.Mission;
+import dev.gestionmissions.entity.Note;
 import dev.gestionmissions.entity.Statut;
 import dev.gestionmissions.entity.User;
 import dev.gestionmissions.exception.ValidationMissionException;
@@ -30,16 +36,20 @@ import dev.gestionmissions.service.UserService;
 @CrossOrigin(origins = "*")
 @RequestMapping("/missions")
 public class MissionController {
-	@Autowired private MissionRepository missionRepository;
-	@Autowired private NoteRepository noteRepository;
-	@Autowired private UserService userController;
-	@Autowired private MissionService missionService;
+	@Autowired
+	private MissionRepository missionRepository;
+	@Autowired
+	private NoteRepository noteRepository;
+	@Autowired
+	private UserService userController;
+	@Autowired
+	private MissionService missionService;
 
 	@GetMapping
 	public List<Mission> listerMissions() {
 		return missionRepository.findAll();
 	}
-	
+
 	@GetMapping("/matricule/{matricule}")
 	public List<Mission> listerMissionsByUser(@PathVariable String matricule) {
 		return missionRepository.findMissionByMatricule(matricule);
@@ -86,15 +96,25 @@ public class MissionController {
 	}
 
 	@GetMapping("/subalternes/{matricule}")
-	public List<Mission> getMissionBySubalterne(@PathVariable String matricule){
+	public List<Mission> getMissionBySubalterne(@PathVariable String matricule) {
 		User user = userController.users.get(matricule);
 		List<Mission> subalternesMission = new ArrayList<>();
-		for(String subalterne:user.getSubalternes()) {
-			for(Mission mission:missionRepository.findMissionByMatricule(subalterne)) {
+		for (String subalterne : user.getSubalternes()) {
+			for (Mission mission : missionRepository.findMissionByMatricule(subalterne)) {
 				subalternesMission.add(mission);
 			}
 		}
-		
+
 		return subalternesMission;
+	}
+
+	@GetMapping("/{id}/frais")
+	public BigDecimal trouverMissionFrais(@PathVariable Integer id) {
+		List<Note> notes = noteRepository.findByMissionId(id);
+		Optional<BigDecimal> optFrais = notes.stream().map(note -> note.getMontant()).reduce((a,b)->a.add(b));
+		if(optFrais.isPresent()){
+			return optFrais.get();
+		}
+		return new BigDecimal(0);
 	}
 }
