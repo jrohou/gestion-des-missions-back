@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import dev.gestionmissions.entity.Mission;
 import dev.gestionmissions.entity.Nature;
 import dev.gestionmissions.exception.ControleException;
 import dev.gestionmissions.exception.DoublonNatureException;
@@ -27,21 +28,20 @@ public class NatureService {
 		else if (isDoublon(nature)){
 			throw new DoublonNatureException();
 		}
-		else if((nature.getPourcentagePrime() != null && nature.getPourcentagePrime().floatValue() > 10))
+		else if(( nature.isVersementPrime() == true && nature.getPourcentagePrime() != null && nature.getPourcentagePrime().floatValue() > 10))
 		{
 			throw new PourcentagePrimeException();
 		}
 		else if( (nature.getTauxJournalierMoyen() == null && nature.isFacturee() == true) ) {
 			throw new TjmException();
 		}
-		
+
 		nature.setDateDebutValidite(LocalDate.now());
 		nature.setDateFinValidite(null);
 		
 		this.natureRepository.save(nature);
 		return true;
 	}
-
 
 	
 	public boolean isDoublon(Nature nature) {
