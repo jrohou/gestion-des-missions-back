@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.mail.MailSenderValidatorAutoConfiguration;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -27,28 +28,15 @@ public class TraitementMissions {
 	private MissionService missionService;
 
 	@Autowired
-	private MailSender mailSender;
+	private EmailServiceImpl email;
 
-	@Autowired
-	private SimpleMailMessage templateMessage;
-
-	@Scheduled(cron = "36 9 * * *") // tous les jours à minuit
+	@Scheduled(cron = "0 0 0 * * *") // tous les jours à minuit
 	public void scheduledTask() {
 		List<Mission> missions = this.missionRepository.findAll();
 
 		missions.stream().filter(mission -> mission.getStatut().equals(Statut.INITIALE)).forEach(mission -> {
 			mission.setStatut(Statut.EN_ATTENTE_VALIDATION);
-			SimpleMailMessage msg = new SimpleMailMessage();
-			msg.setTo("benjamin.lasseur@gmail.com");
-	        msg.setText("Une nouvelle mission est en attente de validation");
-	        
-	        try{
-	            this.mailSender.send(msg);
-	        }
-	        catch (MailException ex) {
-	            // simply log it and go on...
-	            System.err.println(ex.getMessage());
-	        }
+			email.sendSimpleMessage("benjamin.lasseur@gmail.com", "Nouvelle mission à valider", "Envoi d'un mail marche stp !");
 			this.missionRepository.save(mission);
 		});
 
