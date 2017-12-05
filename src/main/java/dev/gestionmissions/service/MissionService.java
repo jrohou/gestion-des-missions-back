@@ -1,15 +1,19 @@
 package dev.gestionmissions.service;
 
+import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dev.gestionmissions.entity.Mission;
-import dev.gestionmissions.entity.Transport;
+import dev.gestionmissions.entity.Note;
 import dev.gestionmissions.exception.ValidationMissionException;
 import dev.gestionmissions.repository.MissionRepository;
+import dev.gestionmissions.repository.NoteRepository;
 import dev.gestionmissions.repository.TransportRepository;
 
 @Service
@@ -20,7 +24,12 @@ public class MissionService {
 
 	@Autowired
 	private TransportRepository transportRepository;
-
+	
+	@Autowired
+	private NoteRepository noteRepository;
+	
+	private List<Note> notes = new ArrayList<>();
+	
 	@Autowired
 	private DateUtil dateUtil;
 
@@ -71,5 +80,16 @@ public class MissionService {
 			throw new ValidationMissionException("La mission ne peut pas se terminer le weekend");
 		}
 		return this.missionRepository.save(mission);
+	}
+	
+	public Mission totalFrais (Mission mission){
+		
+		BigDecimal frais = new BigDecimal(0);
+		notes = noteRepository.findAll();
+		notes.forEach(note -> frais.add(note.getMontant()));
+		
+		
+		return mission;
+		
 	}
 }
