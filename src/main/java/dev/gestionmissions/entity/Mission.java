@@ -2,6 +2,7 @@ package dev.gestionmissions.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -48,6 +49,7 @@ public class Mission {
 		this.transport = transport;
 		this.montantPrime = montantPrime;
 		this.matricule = matricule;
+		
 	}
 
 
@@ -137,6 +139,7 @@ public class Mission {
 	public void setMatricule(String matricule) {
 		this.matricule = matricule;
 	}
+
 	
 	
 	

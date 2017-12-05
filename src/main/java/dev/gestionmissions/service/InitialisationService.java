@@ -80,10 +80,10 @@ public class InitialisationService {
 
 		List<NatureNote> natureNotesList = this.natureNoteRepository.findAll();
 		
-		Stream.of(new Note(LocalDate.of(2017, 1, 6), natureNotesList.get(3), new BigDecimal(15), missionList.get(3)),
-				new Note(LocalDate.of(2012, 1, 6), natureNotesList.get(2), new BigDecimal(17), missionList.get(2)),
-				new Note(LocalDate.of(2016, 11, 6), natureNotesList.get(1), new BigDecimal(20), missionList.get(1)),
-				new Note(LocalDate.of(2017, 1, 6), natureNotesList.get(0), new BigDecimal(12), missionList.get(0)))
+		Stream.of(new Note(LocalDate.of(2017, 1, 6), natureNotesList.get(3), new BigDecimal(15), missionList.get(0)),
+				new Note(LocalDate.of(2012, 1, 6), natureNotesList.get(2), new BigDecimal(17), missionList.get(1)),
+				new Note(LocalDate.of(2016, 11, 6), natureNotesList.get(1), new BigDecimal(20), missionList.get(2)),
+				new Note(LocalDate.of(2017, 1, 6), natureNotesList.get(0), new BigDecimal(12), missionList.get(3)))
 		.forEach(natureNote -> {this.noteRepository.save(natureNote);});
 		
 		try {

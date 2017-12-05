@@ -1,8 +1,13 @@
 package dev.gestionmissions.controller;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+<<<<<<< HEAD
+import java.util.Optional;
+=======
 import java.util.Map;
+>>>>>>> master
 
 import javax.transaction.Transactional;
 
@@ -17,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import dev.gestionmissions.entity.Mission;
+import dev.gestionmissions.entity.Note;
 import dev.gestionmissions.entity.Statut;
 import dev.gestionmissions.entity.User;
 import dev.gestionmissions.exception.ValidationMissionException;
@@ -98,5 +104,15 @@ public class MissionController {
 		}
 
 		return subalternesMission;
+	}
+
+	@GetMapping("/{id}/frais")
+	public BigDecimal trouverMissionFrais(@PathVariable Integer id) {
+		List<Note> notes = noteRepository.findByMissionId(id);
+		Optional<BigDecimal> optFrais = notes.stream().map(note -> note.getMontant()).reduce((a,b)->a.add(b));
+		if(optFrais.isPresent()){
+			return optFrais.get();
+		}
+		return new BigDecimal(0);
 	}
 }
