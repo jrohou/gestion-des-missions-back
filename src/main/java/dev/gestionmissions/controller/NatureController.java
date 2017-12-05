@@ -20,6 +20,7 @@ import dev.gestionmissions.entity.Statut;
 import dev.gestionmissions.exception.ControleException;
 import dev.gestionmissions.exception.DoublonNatureException;
 import dev.gestionmissions.exception.PourcentagePrimeException;
+import dev.gestionmissions.repository.MissionRepository;
 import dev.gestionmissions.repository.NatureRepository;
 import dev.gestionmissions.service.NatureService;
 
@@ -41,7 +42,7 @@ public class NatureController {
 	public List<Nature> listerNature() {
 		return this.natureRepository.findAll();
 	}
-	
+		
 	@PostMapping
 	public boolean ajouterNatureMission (@RequestBody Nature nature ){
 		return this.natService.sauvegarderNature(nature);
