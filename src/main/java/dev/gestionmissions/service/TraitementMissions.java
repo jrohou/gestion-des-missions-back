@@ -39,7 +39,7 @@ public class TraitementMissions {
 			mission.setStatut(Statut.EN_ATTENTE_VALIDATION);
 			Optional<String> optEmail = null;
 			String emailManager = "";
-			try {
+			/*try {
 				optEmail = userService.findUsers().values().stream().filter(user->user.getSubalternes().contains(mission.getMatricule())).findFirst().map(user->user.getEmail());
 				if(optEmail.isPresent()){
 					emailManager=optEmail.get();
@@ -48,7 +48,7 @@ public class TraitementMissions {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			email.sendSimpleMessage(emailManager, "Nouvelle mission à valider", "La mission "+ mission.getId() + " de l'employé " + mission.getMatricule() + " est en attente de validation.");
+			email.sendSimpleMessage(emailManager, "Nouvelle mission à valider", "La mission "+ mission.getId() + " de l'employé " + mission.getMatricule() + " est en attente de validation.");*/
 			this.missionRepository.save(mission);
 		});
 

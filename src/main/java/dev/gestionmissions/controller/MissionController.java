@@ -3,11 +3,8 @@ package dev.gestionmissions.controller;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-<<<<<<< HEAD
 import java.util.Optional;
-=======
 import java.util.Map;
->>>>>>> master
 
 import javax.transaction.Transactional;
 

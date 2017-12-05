@@ -88,7 +88,6 @@ public class MissionService {
 		notes = noteRepository.findAll();
 		notes.forEach(note -> frais.add(note.getMontant()));
 		
-		
 		return mission;
 	}
 
