@@ -61,7 +61,7 @@ public class MissionService {
 		}
 		return this.missionRepository.save(mission);
 	}
-	
+
 	public Mission modifierMission(Mission mission) throws ValidationMissionException {
 		mission.setDateDebut(this.dateUtil.convertJSDateToJavaLocalDate(mission.getDateDebut()));
 		mission.setDateFin(this.dateUtil.convertJSDateToJavaLocalDate(mission.getDateFin()));
@@ -90,6 +90,17 @@ public class MissionService {
 		
 		
 		return mission;
-		
+	}
+
+	public BigDecimal calculerNbJoursTravailles(Mission mission) {
+		LocalDate date = mission.getDateDebut();
+		BigDecimal nbJoursTravailles = new BigDecimal(0);
+		while (date.isBefore(mission.getDateFin()) || date.isEqual(mission.getDateFin())) {
+			if (!date.getDayOfWeek().equals(DayOfWeek.SUNDAY) && !date.getDayOfWeek().equals(DayOfWeek.SATURDAY)) {
+				nbJoursTravailles.add(new BigDecimal(1));
+			}
+			date = date.plusDays(1);
+		}
+		return nbJoursTravailles;
 	}
 }
