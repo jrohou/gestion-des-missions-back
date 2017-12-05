@@ -36,7 +36,8 @@ public class TraitementMissions {
 
 		missions.stream().filter(mission -> mission.getStatut().equals(Statut.INITIALE)).forEach(mission -> {
 			mission.setStatut(Statut.EN_ATTENTE_VALIDATION);
-			email.sendSimpleMessage("benjamin.lasseur@gmail.com", "Nouvelle mission à valider", "Envoi d'un mail marche stp !");
+			email.sendSimpleMessage("benjamin.lasseur@gmail.com", "Nouvelle mission à valider", "La mission "
+					+ mission.getId() + " de l'employé " + mission.getMatricule() + " est en attente de validation.");
 			this.missionRepository.save(mission);
 		});
 
