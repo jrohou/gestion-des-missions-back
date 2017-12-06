@@ -1,16 +1,18 @@
 package dev.gestionmissions.service;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import dev.gestionmissions.entity.Mission;
 import dev.gestionmissions.entity.Nature;
 import dev.gestionmissions.exception.ControleException;
 import dev.gestionmissions.exception.DoublonNatureException;
 import dev.gestionmissions.exception.PourcentagePrimeException;
 import dev.gestionmissions.exception.TjmException;
+import dev.gestionmissions.repository.MissionRepository;
 import dev.gestionmissions.repository.NatureRepository;
 
 
@@ -19,6 +21,9 @@ public class NatureService {
 
 	@Autowired
 	private NatureRepository natureRepository;
+	
+	@Autowired
+	private MissionRepository missionRepository;
 	
 	public boolean sauvegarderNature(Nature nature) throws ControleException{
 		
@@ -51,6 +56,29 @@ public class NatureService {
 			return true;
 		}
 		return false;
+	}
+	
+	public boolean estSupprimable(int id){
+		return !this.missionRepository.findAll().stream()
+		.filter(mission -> mission.getNature().getId()==id && mission.getDateFin().isAfter(LocalDate.now()))
+		.findAny().isPresent();
+	}
+	
+	public void deleteNature(int id){
+		if(this.estSupprimable(id)){
+			if(this.missionRepository.findAll().stream()
+			.filter(mission -> mission.getNature().getId()==id).findAny().isPresent()){
+				Nature nat = this.natureRepository.findOne(id);
+				nat.setDateFinValidite(LocalDate.now());
+				this.natureRepository.save(nat);
+			}else{
+				this.natureRepository.delete(id);
+			}
+		}
+	}
+	
+	public List<Nature> listerNaturesValides(){
+		return this.natureRepository.findAll().stream().filter(mission-> mission.getDateFinValidite()==null).collect(Collectors.toList());
 	}
 	
 	

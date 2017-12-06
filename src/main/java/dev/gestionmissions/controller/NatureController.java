@@ -1,6 +1,8 @@
 package dev.gestionmissions.controller;
 
+import java.time.LocalDate;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.gestionmissions.entity.Nature;
+import dev.gestionmissions.repository.MissionRepository;
 import dev.gestionmissions.repository.NatureRepository;
 import dev.gestionmissions.service.NatureService;
 
@@ -24,6 +27,8 @@ public class NatureController {
 	@Autowired
 	private NatureRepository natureRepository;
 	
+	
+	
 	@Autowired
 	private NatureService natService;
 	
@@ -32,7 +37,7 @@ public class NatureController {
 	 */
 	@GetMapping
 	public List<Nature> listerNature() {
-		return this.natureRepository.findAll();
+		return this.natService.listerNaturesValides();
 	}
 		
 	@PostMapping
@@ -47,7 +52,12 @@ public class NatureController {
 	
 	@DeleteMapping(value="/{id}")
 	 public List<Nature> deleteCollegue(@PathVariable int id) {
-		this.natureRepository.delete(this.natureRepository.findOne(id));
-		return this.natureRepository.findAll();
+		this.natService.deleteNature(id);
+		return this.natService.listerNaturesValides();
 	 }
+	
+	@GetMapping("/{id}/deletable")
+	public boolean naturePeutEtreSupprimee(@PathVariable int id){
+		return this.natService.estSupprimable(id);
+	}
 }
